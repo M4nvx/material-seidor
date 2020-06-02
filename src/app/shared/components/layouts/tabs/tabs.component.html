@@ -1,0 +1,16 @@
+<mat-tab-group [selectedIndex]="selectedTab" (selectedTabChange)="tabChanged($event)">
+  <ng-container *ngFor="let tab of tabList; let index = index; let last = last">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="custom-tab-icon" *ngIf="tab.icon"><span [ngClass]="tab.icon"></span></mat-icon>
+        <span class="block-title">{{ tab.title }}</span>
+        <mat-icon class="removable-tab-icon" *ngIf="tab.isRemovable" (click)="removeTab(index, $event)"><span
+            class="fal fa-times"></span></mat-icon>
+      </ng-template>
+
+      <ng-template matTabContent>
+        <ng-container dynamicComponent [componentInput]="tab.component"> </ng-container>
+      </ng-template>
+    </mat-tab>
+  </ng-container>
+</mat-tab-group>

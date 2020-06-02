@@ -1,0 +1,117 @@
+<br />
+
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<mat-form-field>
+  <mat-select
+    placeholder="{{
+      'shared.select_recursive_grouping.option_placeholder' | translate
+    }}"
+  >
+    <div class="filter">
+      <input
+        matInput
+        placeholder="{{
+          'shared.select_recursive_grouping.search_placeholder' | translate
+        }}..."
+      />
+    </div>
+
+    <!-- default cell template -->
+    <ng-template let-model="model" #defaultTemplate>
+      <div class="list-item">
+        <!-- Icon -->
+        <mat-icon aria-hidden="false" aria-label="Example home icon"
+          >home</mat-icon
+        >
+        <!-- <span
+          *ngIf="option.icon"
+          class="list-item__icon"
+          [ngClass]="option.icon"
+        ></span> -->
+
+        <!-- text -->
+        <div class="list-item__content">
+          <!-- <span class="list-item__subtitle">{{ model.viewValue }}</span> -->
+          <span>{{ model.children.length > 0 }} - {{ model.viewValue }}</span>
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- mat-option template -->
+    <ng-template let-model="model" #matOptTemplate>
+      <mat-option
+        *ngFor="let pokemon of model.children"
+        [value]="pokemon.value"
+      >
+        {{ pokemon.viewValue }}
+      </mat-option>
+    </ng-template>
+
+    <ng-template #matOptGroupTemplate let-model="model">
+      <mat-optgroup [label]="model.viewValue">
+        <mat-select>
+          <div *ngFor="let level3 of model.children">
+            <mat-optgroup
+              *ngIf="level3.children; else leaf"
+              [label]="level3.name"
+            >
+              <mat-select>
+                <mat-option
+                  *ngFor="let levelLast of level3.children"
+                  [value]="levelLast.viewValue"
+                >
+                  {{ levelLast.viewValue }}</mat-option
+                >
+              </mat-select>
+            </mat-optgroup>
+
+            <ng-template #leaf>
+              <mat-option>XD</mat-option>
+            </ng-template>
+          </div>
+        </mat-select>
+      </mat-optgroup>
+    </ng-template>
+
+    <!--Option Template-->
+    <ng-template #matOptionTemplate let-model="model">
+      <!-- <ng-container
+        *ngTemplateOutlet="defaultTemplate; context: { model: model }"
+      ></ng-container> -->
+      <ng-container
+        *ngTemplateOutlet="
+          model.children.length > 0 ? matOptGroupTemplate : defaultTemplate;
+          context: { model: model }
+        "
+      ></ng-container>
+      <!-- <div [ngSwitch]="model.children">
+
+      </div>
+      <mat-select>
+        <div *ngFor="let opt of model.children">
+          <mat-optgroup [label]="opt.viewValue"> </mat-optgroup>
+        </div>
+      </mat-select> -->
+    </ng-template>
+
+    <!--END Group Template-->
+
+    <!--Principal-->
+    <mat-optgroup
+      *ngFor="let group of recursivelist"
+      [label]="group.viewValue"
+      [disabled]="group.disabled"
+    >
+      <mat-option *ngFor="let option of group.children" [value]="option.value">
+        <ng-container
+          *ngTemplateOutlet="matOptionTemplate; context: { model: option }"
+        ></ng-container>
+      </mat-option>
+    </mat-optgroup>
+  </mat-select>
+</mat-form-field>

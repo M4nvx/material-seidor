@@ -1,0 +1,25 @@
+{
+  "shared": {
+    "compound_field": {
+      "enum_name_show": "Nombre - Apellido 1 - Apellido 2",
+      "enum_information_show": "Compañia poliza - Asistencia",
+      "enum_address_show": "Dirección - Postal",
+      "label_name": "Nombre",
+      "label_surname": "Apellido 1",
+      "label_secondsurname": "Apellido 2",
+      "label_company": "Compañia poliza",
+      "label_assistance": "Asistencia",
+      "label_address": "Dirección",
+      "label_cp": "Postal"
+    },
+    "tab_dialog": {
+      "title": "Confirmar",
+      "body": "¿Esta seguro de cerrar la pestaña?"
+    },
+    "select_recursive_grouping": {
+      "option_placeholder": "Select an Option",
+      "option_none": "Ninguno",
+      "search_placeholder": "Search"
+    }
+  }
+}
