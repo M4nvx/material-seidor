@@ -1,3 +1,3 @@
-import { SelectRecursiveGroupingComponent } from './select-recursive-grouping/select-recursive-grouping.component';
+import { SelectGroupingComponent } from './select-grouping/select-grouping.component';
 
-export const FORM_FIELDS = [SelectRecursiveGroupingComponent];
+export const FORM_FIELDS = [SelectGroupingComponent];

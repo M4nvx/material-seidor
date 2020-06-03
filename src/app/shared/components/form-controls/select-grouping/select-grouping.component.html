@@ -1,16 +1,16 @@
 <mat-form-field style="width: 34rem;">
   <mat-select placeholder="{{
       'shared.select_recursive_grouping.option_placeholder' | translate
-    }}">
+    }}" [formControl]="selectControl" #singleSelect>
     <div class="filter">
-      <input matInput placeholder="{{
-          'shared.select_recursive_grouping.search_placeholder' | translate
-        }}..." />
+      <mat-select-search [formControl]="filterControl"></mat-select-search>
     </div>
 
+    <mat-option *ngIf="optionlist?.length ===0" class="empty-row"></mat-option>
 
-    <mat-option *ngIf="recursivelist?.length ===0" class="empty-row"></mat-option>
-
+    <!-- <mat-select-trigger class="list-item">
+      <span class="p4-16 list-item__content">{{optionLabel ? selectedItem[optionLabel]: selectedItem}}</span>
+    </mat-select-trigger> -->
 
     <!-- default cell template -->
     <ng-template let-model="model" #defaultTemplate>
@@ -28,14 +28,15 @@
 
     <!-- mat-optGroup template -->
     <ng-template #matOptGroupTemplate let-model="model">
-      <div class="custom-optGroup">
+
+      <mat-option [value]="model.value">
+        <ng-container *ngTemplateOutlet="defaultTemplate;context: { model: model }"></ng-container>
+      </mat-option>
+
+      <!-- <div class="custom-optGroup">
         <mat-optgroup>
           <div class="list-item-header">
-            <!-- Icon -->
             <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
-            <!-- <span *ngIf="model.icon" class="list-item__icon" [ngClass]="model.icon"></span> -->
-
-            <!-- text -->
             <div>
               <span>{{ model.viewValue }}</span>
             </div>
@@ -44,7 +45,7 @@
             <ng-container *ngTemplateOutlet="defaultTemplate; context: { model: option }"></ng-container>
           </mat-option>
         </mat-optgroup>
-      </div>
+      </div> -->
     </ng-template>
 
     <!--Option Template-->
@@ -64,7 +65,7 @@
     </ng-template>
 
     <!--Principal-->
-    <mat-optgroup *ngFor="let group of recursivelist" [disabled]="group.disabled">
+    <mat-optgroup *ngFor="let group of filteredOptions | async" [disabled]="group.disabled">
       <div>
         <!-- Icon -->
         <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
