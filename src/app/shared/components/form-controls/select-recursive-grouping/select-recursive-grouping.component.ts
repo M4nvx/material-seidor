@@ -69,6 +69,13 @@ export class SelectRecursiveGroupingComponent implements OnInit {
   // list of any
   recursivelist: OptionGroup[] = [];
 
+  getChildren(value: OptionGroup): boolean {
+    if (value.children.length > 0) {
+      return true;
+    }
+    return false;
+  }
+
   getValues(): void {
     this.recursivelist = [
       {
